@@ -1,0 +1,13 @@
+.container {
+    width: 186px;
+    height: 39px;
+    filter: drop-shadow(0px 4px 4px rgba(255, 255, 255, 0.25));
+    background: var(--secondary);
+    border: 0.0px solid var(--text);
+    border-radius: 7px;
+    font-weight: 200;
+    font-size: 20px;
+    text-align: center;
+    margin: 0.7vh;
+    color: var(--text);
+}
