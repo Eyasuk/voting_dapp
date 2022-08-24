@@ -1,0 +1,24 @@
+.container {
+    margin-top: 100px;
+    display: flex;
+    .left {
+        margin-left: 15vw;
+        margin-top: 15vh;
+        .steps {
+            background-color: var(--background);
+            .active {
+                padding-bottom: 10vh;
+            }
+            // .notactive {}
+        }
+    }
+    .right {
+        margin-left: 10vw;
+        min-width: 35vw;
+        min-height: 80vh;
+        background-color: var(--background);
+        border: 1px solid var(--secondary);
+        border-radius: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}

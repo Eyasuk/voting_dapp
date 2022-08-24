@@ -1,4 +1,5 @@
 import NextImage from 'next/image';
+import WalletHeader from 'components/features/walletheader';
 import styles from './header.module.scss';
 
 export default function Header({ children }: any): JSX.Element {
@@ -11,7 +12,9 @@ export default function Header({ children }: any): JSX.Element {
                     <p className={styles.name}>votmer</p>
                 </div>
                 <div className={styles.menu} >
+
                     <ul className={styles.nav}>
+                        <WalletHeader />
                         <li className="active"><a href="#">Home</a></li>
                         <li><a href="#">Price</a></li>
                         <li><a href="#">About</a></li>

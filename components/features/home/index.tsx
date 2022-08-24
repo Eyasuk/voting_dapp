@@ -2,7 +2,6 @@ import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls } from '@react-three/drei';
 import Button from 'components/shared/button';
-//import Header from 'components/shared/feature'
 import Model from 'components/shared/backgroundModel'
 import styles from './home.module.scss';
 export default function Home(): JSX.Element {
@@ -12,10 +11,10 @@ export default function Home(): JSX.Element {
             <div className={styles.row}>
                 <div className={styles.left}>
                     <p className={styles.title}>
-                        Vote Free Control <br /> Them.
+                        Vote Free Control <br /> Your Future.
                     </p>
                     <p className={styles.description}>
-                        fully decentralized voting space builted <br /> on ethereum blockchain make voting <br /> anonymous and trustable.
+                        fully decentralized voting space builted <br /> on ethereum blockchain making voting <br /> anonymous and trustable.
                     </p>
                     <div className={styles.buttons}>
                         <Button text="vote" />

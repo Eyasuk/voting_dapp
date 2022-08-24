@@ -1,0 +1,13 @@
+.container {
+    margin-top: 1.5vh;
+    .button {
+        color: var(--text);
+        background-color: var(--background);
+        border-color: var(--secondary);
+    }
+    .button:hover {
+        color: var(--text);
+        background-color: var(--background);
+        border-color: var(--secondary);
+    }
+}
