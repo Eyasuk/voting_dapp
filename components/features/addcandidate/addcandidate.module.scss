@@ -1,3 +1,30 @@
 .container {
     margin: 4vw;
+    display: flex;
+    justify-content: space-between;
+    .candidates {
+        margin-left: 3vh;
+        min-width: 30vh;
+        min-height: 100px;
+        border-radius: 6px;
+        border: 0.2px solid var(--secondary);
+        padding: 2vh;
+        .candidate {
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            max-height: 50vh;
+            .candidateBox {
+                margin: 1vh;
+                width: 20vh;
+                background-color: aliceblue;
+                padding-top: 1px;
+                .content {
+                    max-height: 3vh;
+                    padding-top: 1px;
+                    margin: 0px;
+                }
+            }
+        }
+    }
 }
