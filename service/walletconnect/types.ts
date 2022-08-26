@@ -3,7 +3,7 @@ export enum WalletLists {
     WalletConnect
 };
 
-export enum Network {
+export enum Networks {
     Ethereum = 'Ethereum',
     Ropsten = 'Ropsten',
     LocalHost = 'LocalHost',

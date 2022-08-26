@@ -1,4 +1,3 @@
-import NextImage from 'next/image';
 import { AbiItem } from 'web3-utils';
 import { useEffect, useState } from 'react';
 import Web3 from 'web3';

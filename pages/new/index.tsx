@@ -1,8 +1,8 @@
 import { NextPage } from "next";
-import CreateVote from "components/features/add/createvote";
+import AddVote from "components/features/addvote";
 
 const NewVote: NextPage = () => {
-    return <CreateVote />
+    return <AddVote />
 }
 
 export default NewVote;

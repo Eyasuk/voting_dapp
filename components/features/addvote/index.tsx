@@ -1,12 +1,13 @@
 import { Steps } from 'antd'
 import { useState } from 'react';
-import CreateWallet from 'components/features/connectwallet';
+import ConnectWallet from 'components/features/connectwallet';
 
-import styles from './createvote.module.scss';
+import styles from './addvote.module.scss';
+import CreateVote from 'components/features/createvote';
 
 const { Step } = Steps;
-export default function CreateVote(): JSX.Element {
-    const [step, setStep] = useState<number>(0);
+export default function AddVote(): JSX.Element {
+    const [step, setStep] = useState<number>(1);
     return (
         <div className={styles.container}>
             <div className={styles.left}>
@@ -18,8 +19,13 @@ export default function CreateVote(): JSX.Element {
                 </Steps>
 
             </div>
-            <div className={styles.right}>
-                <CreateWallet />
+            <div className={styles.right}>{
+
+                step == 0 ? <ConnectWallet /> :
+                    step == 1 ? <CreateVote /> : <div>2</div>
+
+            }
+
             </div>
         </div>
     );
