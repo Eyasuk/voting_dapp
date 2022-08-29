@@ -1,49 +1,82 @@
+import { useState } from 'react';
 import { Button } from 'antd';
 import { WalletOutlined } from '@ant-design/icons'
-import { useState } from 'react';
 import { useWeb3React } from '@web3-react/core';
 import { InjectedConnector } from '@web3-react/injected-connector';
+import { AbstractConnector } from '@web3-react/abstract-connector';
+import { WalletConnectConnector } from '@web3-react/walletconnect-connector';
 import WalletModal from 'components/shared/modal';
+import { Wallets, Networks, NetworkDetail } from 'service/walletconnect/types';
+import WalletHeaderProps from './types';
+
 import styles from './walletheader.module.scss';
 
-const injected = new InjectedConnector({
-    supportedChainIds: [1, 2, 3, 4, 5, 6],
-});
-export default function WalletHeader(): JSX.Element {
-    const { activate, active, account, chainId, deactivate } = useWeb3React();
-    const [connectModal, setConnectModal] = useState<boolean>(false);
-    const handleClick = (): void => {
-        console.log("o");
+declare global {
+    interface Window {
+        ethereum: any;
+    }
+};
 
+export default function WalletHeader({ network }: WalletHeaderProps): JSX.Element {
+    const { activate, active, chainId, account } = useWeb3React();
+    const [connectModal, setConnectModal] = useState<boolean>(false);
+
+    const openWalletModal = (): void => {
         setConnectModal(!connectModal);
     };
+
     const onCancel = (): void => {
         setConnectModal(false);
     };
-    const openMetaMask = async (): Promise<void> => {
+
+    const abbreviateWalletAddress = (string: string): string => {
+        return string?.slice(0, 5) + '...' + string?.slice(string.length - 4);
+    };
+
+    async function connectWallet(walletType: Wallets): Promise<boolean> {
+        let connector: AbstractConnector;
+        if (!network) {
+            network = Networks.Ethereum;
+        }
+        if (walletType == Wallets.MetaMask) {
+            connector = new InjectedConnector({
+                supportedChainIds: [NetworkDetail[network].chainId],
+            });
+            if (window.ethereum && window.ethereum.networkVersion != NetworkDetail[network].chainId) {
+                await window.ethereum.request({
+                    method: 'wallet_addEthereumChain',
+                    params: [
+                        {
+                            // ...network,
+                        },
+                    ],
+                });
+            }
+        } else {
+            connector = new WalletConnectConnector({
+                rpc: [NetworkDetail[network].rpcLink],
+                bridge: 'https://bridge.walletconnect.org',
+                qrcode: true,
+            });
+        }
 
         await activate(
-            injected,
+            connector,
             (err) => {
-                console.log(err)
-            }, true
+                console.log(err);
+                return false;
+            }
         );
-
-    };
-    const openWallet = async (some: string): Promise<void> => {
-
-        if (some === 's') {
-
-            await openMetaMask();
-        }
+        setConnectModal(!connectModal);
+        return true;
     };
 
     return (
         <>
             <div className={styles.container}>
-                <Button className={styles.button} type="primary" size='middle' icon={<WalletOutlined />} onClick={handleClick}>wallet</Button>
+                {active ? <p>{abbreviateWalletAddress(account ?? '')}</p> : <Button className={styles.button} type="primary" size='middle' icon={<WalletOutlined />} onClick={openWalletModal}>wallet</Button>}
             </div>
-            <WalletModal isModalVisible={connectModal} cancel={onCancel} openWallet={openWallet} />
+            <WalletModal isModalVisible={connectModal} cancel={onCancel} openWallet={connectWallet} />
         </>
     );
 }

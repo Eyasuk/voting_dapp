@@ -1,10 +1,17 @@
+import { useRouter } from 'next/router';
 import { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { Environment, OrbitControls } from '@react-three/drei';
 import Button from 'components/shared/button';
-import Model from 'components/shared/backgroundModel'
+import Model from 'components/shared/backgroundModel';
+
 import styles from './home.module.scss';
 export default function Home(): JSX.Element {
+    const router = useRouter();
+    const navigateCreateNew = () => {
+
+        router.push('./new')
+    }
     return (
 
         <div className={styles.container}>
@@ -18,7 +25,7 @@ export default function Home(): JSX.Element {
                     </p>
                     <div className={styles.buttons}>
                         <Button text="vote" />
-                        <Button text="create new" />
+                        <Button text="create new" onClick={navigateCreateNew} />
                     </div>
                 </div>
                 <div className={styles.model}>

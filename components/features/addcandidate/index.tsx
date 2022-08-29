@@ -40,7 +40,7 @@ export default function AddCandidate(): JSX.Element {
                         <TextArea rows={4} />
                     </Form.Item>
 
-                    <Button text='next' />
+
                 </Form></div>
             <div className={styles.candidates}>
                 <p>candidates</p>

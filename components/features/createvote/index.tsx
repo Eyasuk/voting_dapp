@@ -58,7 +58,7 @@ export default function CreateVote(): JSX.Element {
                         <Radio value="no"> Yes </Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Button text='next' />
+
             </Form>
 
 
