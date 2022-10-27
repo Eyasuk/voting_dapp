@@ -1,3 +1,10 @@
 .container {
     margin: 4vw;
+    .maxVoter {
+        display: flex;
+        height: 32px;
+        .switch {
+            margin-left: 10px;
+        }
+    }
 }

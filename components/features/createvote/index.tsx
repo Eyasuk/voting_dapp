@@ -1,37 +1,67 @@
+import { useState } from 'react';
 import { PlusOutlined } from '@ant-design/icons';
 import { Form, DatePicker, Input, Radio, Upload, InputNumber, Switch } from 'antd';
 import Button from 'components/shared/button';
+import { useAddVote } from 'context/addVote';
+import { useNewVote } from 'context/newvoteinfo';
+import { voteInfoType } from 'context/newvoteinfo/types';
+import { photoToBase64 } from 'service/image';
+
 import styles from './createvote.module.scss';
 
 const { RangePicker } = DatePicker;
 export default function CreateVote(): JSX.Element {
-    const onChange = (value: any, dateString: any) => {
-        console.log('Selected Time: ', value);
-        console.log('Formatted Selected Time: ', dateString);
+
+    const { backStep, nextStep, step } = useAddVote();
+    const { setVote } = useNewVote();
+    const [maxVoter, setMaxVoter] = useState<boolean>(true);
+    const onSwitchChange = (value: any) => {
     };
 
-    const onOk = (value: any) => {
-        console.log('onOk: ', value);
+    const onFinish = (values: any) => {
+        photoToBase64(values.image.file.originFileObj, (value: string) => {
+            const image = value;
+            const voteInformation: voteInfoType = {
+                voteName: values.name,
+                enableMaxVoter: values.maxEnable,
+                maxVoter: values.max ?? -1,
+                startDate: Date.parse(values.date[0]._d).toString(),
+                endDate: Date.parse(values.date[1]._d).toString(),
+                voteImage: image
+            };
+            setVote(voteInformation);
+            nextStep();
+        });
     };
 
+    const onFFinish = (values: any) => {
+        console.log(values)
+    }
     return (
         <div className={styles.container}>
             <Form
                 className={styles.form}
                 labelCol={{ span: 10 }}
                 layout="vertical"
+                onFinish={onFinish}
+                onFinishFailed={onFFinish}
             >
-                <Form.Item label="Name">
-                    <Input />
+                <Form.Item label="Name" name='name'>
+                    <Input required />
                 </Form.Item>
-                <Form.Item label="Max Voter">
-                    <InputNumber />
+                <Form.Item label="Max Voter" name='max'>
+                    <div className={styles.maxVoter}>
+                        <InputNumber disabled={maxVoter} required />
+                        <div className={styles.switch}>
+                            <Form.Item name='maxEnable'>
+                                <Switch onChange={onSwitchChange} />
+                            </Form.Item></div>
 
-                    <Switch />
-
+                    </div>
                 </Form.Item>
-                <Form.Item label="Upload" valuePropName="fileList">
-                    <Upload action="/upload.do" listType="picture-card">
+                <Form.Item label="Upload" name='image' >
+                    <Upload listType="picture-card" maxCount={1}
+                    >
                         <div>
                             <PlusOutlined />
                             <div
@@ -45,24 +75,24 @@ export default function CreateVote(): JSX.Element {
                     </Upload>
                 </Form.Item>
 
-                <Form.Item label="Date">
+                <Form.Item label="Date" name='date'>
                     <RangePicker showTime={{ format: 'HH:mm', }}
                         format='YYYY-MM-DD HH:mm'
-                        onChange={onChange}
-                        onOk={onOk}
+                        allowEmpty={[false, false]}
                     />
                 </Form.Item>
-                <Form.Item label="Close if all voters voted">
-                    <Radio.Group>
-                        <Radio value="yes"> Yes </Radio>
-                        <Radio value="no"> Yes </Radio>
-                    </Radio.Group>
+
+                <Form.Item>
+                    <Button text='back' onClick={backStep} />
+                    <Button text='next'
+
+                        submit={true} />
                 </Form.Item>
 
             </Form>
 
 
 
-        </div>
+        </div >
     );
 }

@@ -9,9 +9,13 @@ import styles from './home.module.scss';
 export default function Home(): JSX.Element {
     const router = useRouter();
     const navigateCreateNew = () => {
-
         router.push('./new')
     }
+
+    const navigateVote = () => {
+        router.push('./vote')
+    }
+
     return (
 
         <div className={styles.container}>
@@ -24,7 +28,7 @@ export default function Home(): JSX.Element {
                         fully decentralized voting space builted <br /> on ethereum blockchain making voting <br /> anonymous and trustable.
                     </p>
                     <div className={styles.buttons}>
-                        <Button text="vote" />
+                        <Button text="vote" onClick={navigateVote} />
                         <Button text="create new" onClick={navigateCreateNew} />
                     </div>
                 </div>

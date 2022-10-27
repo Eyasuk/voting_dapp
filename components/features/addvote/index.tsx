@@ -1,24 +1,26 @@
 import { Steps } from 'antd'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useWeb3React } from '@web3-react/core';
 import ConnectWallet from 'components/features/connectwallet';
 import AddCandidate from 'components/features/addcandidate';
 import CreateVote from 'components/features/createvote';
+import Button from 'components/shared/button';
+import { useAddVote } from 'context/addVote';
 
 import styles from './addvote.module.scss';
-import Button from 'components/shared/button';
-
+import DeployVote from '../deployvote';
 
 const { Step } = Steps;
 export default function AddVote(): JSX.Element {
-    const [step, setStep] = useState<number>(0);
-    const nextStep = () => {
-        if (step < 3)
-            setStep(step + 1);
-    };
-    const backStep = () => {
-        if (step > 0)
-            setStep(step - 1);
-    };
+    const { active } = useWeb3React();
+    const { step, initialStep } = useAddVote();
+
+    useEffect(() => {
+        if (!active) {
+            initialStep;
+        }
+
+    }, [active, initialStep]);
 
     return (
         <div className={styles.container}>
@@ -36,12 +38,9 @@ export default function AddVote(): JSX.Element {
                 step == 0 ? <ConnectWallet /> :
                     step == 1 ? <CreateVote /> :
                         step == 2 ? <AddCandidate /> :
-                            <div></div>
-            }   <span>  {step != 0 && <Button text='back' onClick={backStep} />}
-                    {step != 3 && <Button text='next' onClick={nextStep} />}</span>
-
+                            step == 3 ? <DeployVote /> : <div> </div>
+            }
             </div>
-
         </div>
     );
 }

@@ -33,28 +33,33 @@ export default function WalletHeader({ network }: WalletHeaderProps): JSX.Elemen
         return string?.slice(0, 5) + '...' + string?.slice(string.length - 4);
     };
 
+
     async function connectWallet(walletType: Wallets): Promise<boolean> {
         let connector: AbstractConnector;
+
         if (!network) {
-            network = Networks.Ethereum;
+            network = Networks.Polygon;
         }
         if (walletType == Wallets.MetaMask) {
             connector = new InjectedConnector({
-                supportedChainIds: [NetworkDetail[network].chainId],
+                supportedChainIds: [parseInt(NetworkDetail[network].chainId, 16)],
             });
-            if (window.ethereum && window.ethereum.networkVersion != NetworkDetail[network].chainId) {
+            if (window.ethereum && window.ethereum.networkVersion != parseInt(NetworkDetail[network].chainId, 16)) {
+                console.log(NetworkDetail[network])
+                //change network
+                console.log(window.ethereum.request)
                 await window.ethereum.request({
                     method: 'wallet_addEthereumChain',
                     params: [
                         {
-                            // ...network,
+                            ...NetworkDetail[network]
                         },
                     ],
                 });
             }
         } else {
             connector = new WalletConnectConnector({
-                rpc: [NetworkDetail[network].rpcLink],
+                rpc: NetworkDetail[network].rpcUrls,
                 bridge: 'https://bridge.walletconnect.org',
                 qrcode: true,
             });

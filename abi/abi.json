@@ -24,6 +24,11 @@
             },
             {
                 "internalType": "uint256",
+                "name": "maxVoter",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
                 "name": "voteStartingDate",
                 "type": "uint256"
             },
@@ -38,9 +43,14 @@
                 "type": "uint256"
             },
             {
-                "internalType": "uint256",
-                "name": "voterNumber",
-                "type": "uint256"
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "imageUrl",
+                "type": "string"
             }
         ],
         "stateMutability": "view",
@@ -55,6 +65,11 @@
             },
             {
                 "internalType": "uint256",
+                "name": "maxVoter",
+                "type": "uint256"
+            },
+            {
+                "internalType": "uint256",
                 "name": "startDate",
                 "type": "uint256"
             },
@@ -62,6 +77,42 @@
                 "internalType": "uint256",
                 "name": "endDate",
                 "type": "uint256"
+            },
+            {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "imageUrl",
+                "type": "string"
+            },
+            {
+                "components": [{
+                        "internalType": "string",
+                        "name": "name",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "description",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "string",
+                        "name": "imageUrl",
+                        "type": "string"
+                    },
+                    {
+                        "internalType": "uint256",
+                        "name": "voteCount",
+                        "type": "uint256"
+                    }
+                ],
+                "internalType": "struct Election.Candidate[]",
+                "name": "candidate",
+                "type": "tuple[]"
             }
         ],
         "name": "addVote",
@@ -73,6 +124,16 @@
         "inputs": [{
                 "internalType": "string",
                 "name": "_name",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "description",
+                "type": "string"
+            },
+            {
+                "internalType": "string",
+                "name": "imageUrl",
                 "type": "string"
             },
             {
@@ -114,6 +175,11 @@
                 },
                 {
                     "internalType": "uint256",
+                    "name": "maxVoter",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
                     "name": "voteStartingDate",
                     "type": "uint256"
                 },
@@ -128,9 +194,14 @@
                     "type": "uint256"
                 },
                 {
-                    "internalType": "uint256",
-                    "name": "voterNumber",
-                    "type": "uint256"
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
                 }
             ],
             "internalType": "struct Election.Votes[]",
@@ -155,6 +226,16 @@
                     "type": "string"
                 },
                 {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                },
+                {
                     "internalType": "uint256",
                     "name": "voteCount",
                     "type": "uint256"
@@ -163,6 +244,58 @@
             "internalType": "struct Election.Candidate[]",
             "name": "",
             "type": "tuple[]"
+        }],
+        "stateMutability": "view",
+        "type": "function",
+        "constant": true
+    },
+    {
+        "inputs": [{
+            "internalType": "uint256",
+            "name": "_voteid",
+            "type": "uint256"
+        }],
+        "name": "getVote",
+        "outputs": [{
+            "components": [{
+                    "internalType": "string",
+                    "name": "name",
+                    "type": "string"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "maxVoter",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "voteStartingDate",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "voteEndingDate",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "candidateNumber",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "string",
+                    "name": "description",
+                    "type": "string"
+                },
+                {
+                    "internalType": "string",
+                    "name": "imageUrl",
+                    "type": "string"
+                }
+            ],
+            "internalType": "struct Election.Votes",
+            "name": "",
+            "type": "tuple"
         }],
         "stateMutability": "view",
         "type": "function",

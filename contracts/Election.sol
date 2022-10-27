@@ -4,15 +4,19 @@ pragma solidity >=0.4.22 <0.9.0;
 contract Election {
     struct Candidate {
         string name;
+        string description;
+        string imageUrl;
         uint256 voteCount;
     }
 
     struct Votes {
         string name;
+        uint256 maxVoter;
         uint256 voteStartingDate;
         uint256 voteEndingDate;
         uint256 candidateNumber;
-        uint256 voterNumber;
+        string description;
+        string imageUrl;
     }
 
     mapping(uint256 => Votes) public votes;
@@ -22,21 +26,45 @@ contract Election {
 
     function addVote(
         string calldata _name,
+        uint256 maxVoter,
         uint256 startDate,
-        uint256 endDate
+        uint256 endDate,
+        string calldata description,
+        string calldata imageUrl,
+        Candidate[] calldata candidate
     ) public {
         voteId++;
-        Votes storage vote = votes[voteId];
+        uint256 id = voteId;
+        Votes storage vote = votes[id];
         vote.name = _name;
         vote.voteStartingDate = startDate;
         vote.voteEndingDate = endDate;
+        vote.maxVoter = maxVoter;
+        vote.imageUrl = imageUrl;
+        vote.description = description;
+        vote.candidateNumber = candidate.length;
+        for (uint256 i = 0; i < candidate.length; i++) {
+            addCandidate(
+                candidate[i].name,
+                candidate[i].description,
+                candidate[i].imageUrl,
+                id
+            );
+        }
     }
 
-    function addCandidate(string calldata _name, uint256 _voteId) public {
-        require(block.timestamp >= votes[_voteId].voteStartingDate);
+    function addCandidate(
+        string calldata _name,
+        string calldata description,
+        string calldata imageUrl,
+        uint256 _voteId
+    ) public {
+        require(block.timestamp <= votes[_voteId].voteStartingDate);
         votes[_voteId].candidateNumber++;
         candidates[_voteId][votes[_voteId].candidateNumber] = Candidate(
             _name,
+            description,
+            imageUrl,
             0
         );
     }
@@ -53,8 +81,8 @@ contract Election {
 
     function getVotes() public view returns (Votes[] memory) {
         Votes[] memory ret = new Votes[](voteId);
-        for (uint256 i = 0; i < voteId; i++) {
-            ret[i] = votes[i];
+        for (uint256 i = 1; i <= voteId; i++) {
+            ret[i - 1] = votes[i];
         }
         return ret;
     }
@@ -69,8 +97,15 @@ contract Election {
         );
 
         for (uint256 i = 0; i < votes[_voteid].candidateNumber; i++) {
-            ret[i] = candidates[_voteid][i];
+            ret[i] = candidates[_voteid][i + 1];
         }
         return ret;
+    }
+
+    function getVote(uint256 _voteid) public view returns (Votes memory) {
+        //  Votes memory ret = new Votes()
+        //  ret = votes[_voteid];
+        //  return ret;
+        return votes[_voteid];
     }
 }
