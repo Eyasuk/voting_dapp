@@ -1,0 +1,30 @@
+.container {
+    margin-top: 7em;
+    .voteInfo {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        .image {
+            width: 300px;
+            height: 200px;
+        }
+        .detail {
+            position: relative;
+            padding: 1em;
+            border: 1px solid var(--secondary);
+            border-radius: 1em;
+            width: 80%;
+            min-height: 300px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+            .date {
+                display: flex;
+                justify-content: space-between;
+            }
+            .button {
+                margin-top: 2em;
+                margin-bottom: 2em;
+                margin-left: 30%;
+            }
+        }
+    }
+}

@@ -26,7 +26,7 @@ export default function Vote(): JSX.Element {
     return (
         <div className={styles.container}>
             {
-                data && data.map((info, index) => {
+                data.length != 0 && data.map((info, index) => {
                     return <Votes key={index} data={info} id={index} />;
                 })
 

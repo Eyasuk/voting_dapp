@@ -22,13 +22,14 @@ export default function DeployVote(): JSX.Element {
 
     const deploy = () => {
         try {
+            console.log(candidates)
             deployVote(chainId || 5777, {
                 name: voteInfo.voteName,
                 noOfCandidate: 1,
                 startingDate: parseInt(voteInfo.startDate),
-                endingDate: parseInt(voteInfo.startDate),
+                endingDate: parseInt(voteInfo.endDate),
                 candidates: candidates,
-                descrption: '',
+                descrption: 's',
                 imageUrl: voteInfo.voteImage
             })
             // setVoteDeployed(true);

@@ -15,8 +15,12 @@ export const deployVote = async (chainId: number, voteInfo: VoteInfoType) => {
     const web3 = new Web3(network.rpcLink);
     const voteContract = new web3.eth.Contract(Abi as AbiItem[], network.contractAddress);
     try {
+
         const accounts = await web3.eth.getAccounts();
-        const info = await voteContract.methods.addVote(voteInfo.name, 0, voteInfo.startingDate, voteInfo.endingDate, voteInfo.descrption, voteInfo.imageUrl, voteInfo.candidates).send({ from: accounts[0], gas: 16721975 },);
+
+        console.log(voteInfo.candidates);
+        const info = await voteContract.methods.addVote(voteInfo.name, 0, voteInfo.startingDate, voteInfo.endingDate, voteInfo.descrption, voteInfo.imageUrl, voteInfo.candidates).send({ from: accounts[0], gas: 1721975 },);
+
         return { success: true, data: info };
     }
     catch (err) {
@@ -54,7 +58,7 @@ export const getVote = async (voteId: any) => {
     try {
         const voteContract = new web3.eth.Contract(Abi as AbiItem[], network.contractAddress);
         const candidate = await voteContract.methods.getCandidate(voteId).call();
-        const voteInfo = await voteContract.methods.getVote().call();
+        const voteInfo = await voteContract.methods.getVote(voteId).call();
 
         return { success: true, data: { candidate: candidate, voteInfo: voteInfo } };
     }
@@ -62,6 +66,21 @@ export const getVote = async (voteId: any) => {
         return { success: false, data: err }
     }
 };
+
+export const voting = async (voteId: number, candidateId: number) => {
+
+    const network = networks[5777]
+    const web3 = new Web3(network.rpcLink);
+    const accounts = await web3.eth.getAccounts();
+    try {
+        const voteContract = new web3.eth.Contract(Abi as AbiItem[], network.contractAddress);
+        const response = await voteContract.methods.voting(candidateId, voteId).send({ from: accounts[1], gas: 1721975 },);
+        return { success: true, data: response };
+    }
+    catch (err) {
+        return { success: false, data: err }
+    }
+}
 
 
 

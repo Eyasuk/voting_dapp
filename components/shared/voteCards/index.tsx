@@ -24,13 +24,13 @@ export default function VoteCard({ data, id }: any): JSX.Element {
                 <Link href={`vote/${id + 1}`} title="View Details">View Details</Link>
             </div>
             <div className={styles.image}>
-                <img className={styles.img} src="https://www.dropbox.com/s/sxwzjltdlviw6ra/blank-1886008_640.png?raw=1" />
+                <img className={styles.img} src={data[6]} />
             </div>
             <div className={styles.content}>
                 <span className={styles.title}>{data[0]}</span>
                 <span className={styles.pricestart}>{voteStatus}</span>
                 <div className={styles.caption}>
-                    Solid Men Round Neck<br /> 100% Pure Cotton<br />
+                    {data[5]}
 
                 </div >
                 <div className={styles.detial}>

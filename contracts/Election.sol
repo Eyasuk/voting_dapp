@@ -42,7 +42,7 @@ contract Election {
         vote.maxVoter = maxVoter;
         vote.imageUrl = imageUrl;
         vote.description = description;
-        vote.candidateNumber = candidate.length;
+
         for (uint256 i = 0; i < candidate.length; i++) {
             addCandidate(
                 candidate[i].name,
@@ -69,14 +69,23 @@ contract Election {
         );
     }
 
-    function voting(uint256 _candidateId, uint256 _voteId) public {
-        require(voters[_voteId][msg.sender]);
+    function voting(uint256 _candidateId, uint256 _voteId)
+        public
+        returns (uint256, uint256)
+    {
+        require(!voters[_voteId][msg.sender], "already voted");
         require(
-            _candidateId > 0 && _candidateId <= votes[_voteId].candidateNumber
+            _candidateId > 0 && _candidateId <= votes[_voteId].candidateNumber,
+            "invalid candidate"
         );
-        require(block.timestamp >= votes[_voteId].voteStartingDate);
-        voters[voteId][msg.sender] = true;
+        // require(
+        //     block.timestamp >= votes[_voteId].voteStartingDate,
+        //     "not started"
+        // );
+        //require(block.timestamp < votes[_voteId].voteEndingDate, "ended");
+        voters[_voteId][msg.sender] = true;
         candidates[_voteId][_candidateId].voteCount++;
+        return (block.timestamp, votes[_voteId].voteStartingDate);
     }
 
     function getVotes() public view returns (Votes[] memory) {

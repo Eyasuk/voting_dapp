@@ -6,7 +6,7 @@ import Button from 'components/shared/button';
 import { useAddVote } from 'context/addVote';
 import { useAddCandidate } from 'context/addcandidate';
 import { candidateType } from 'context/addcandidate/types';
-import { photoToBase64 } from 'service/image'
+import { photoToBase64, uploadPhoto } from 'service/image'
 
 import styles from './addcandidate.module.scss';;
 
@@ -20,8 +20,9 @@ export default function AddCandidate(): JSX.Element {
 
     const onFinish = (values: any) => {
         let image: string;
-        photoToBase64(values.image.file.originFileObj, (value: string) => {
-            image = value;
+        photoToBase64(values.image.file.originFileObj, async (value: string) => {
+
+            image = (await uploadPhoto(value)).data;
             const candidate: candidateType = [
                 values.name,
                 values.description,

@@ -5,7 +5,7 @@ import Button from 'components/shared/button';
 import { useAddVote } from 'context/addVote';
 import { useNewVote } from 'context/newvoteinfo';
 import { voteInfoType } from 'context/newvoteinfo/types';
-import { photoToBase64 } from 'service/image';
+import { photoToBase64, uploadPhoto } from 'service/image';
 
 import styles from './createvote.module.scss';
 
@@ -19,8 +19,8 @@ export default function CreateVote(): JSX.Element {
     };
 
     const onFinish = (values: any) => {
-        photoToBase64(values.image.file.originFileObj, (value: string) => {
-            const image = value;
+        photoToBase64(values.image.file.originFileObj, async (value: string) => {
+            const image = (await uploadPhoto(value)).data;
             const voteInformation: voteInfoType = {
                 voteName: values.name,
                 enableMaxVoter: values.maxEnable,
