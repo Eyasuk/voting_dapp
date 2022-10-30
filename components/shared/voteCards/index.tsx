@@ -4,8 +4,8 @@ import styles from './voteCard.module.scss';
 
 export default function VoteCard({ data, id }: any): JSX.Element {
     const [voteStatus, setVoteStatus] = useState<string>('');
-    const startDate = parseInt(data[2]);
-    const endDate = parseInt(data[3]);
+    const startDate = parseInt(data[2]) * 1000;
+    const endDate = parseInt(data[3]) * 1000;
 
     useEffect(() => {
         if (startDate <= Date.now() && endDate > Date.now()) {
@@ -39,17 +39,14 @@ export default function VoteCard({ data, id }: any): JSX.Element {
                 </div>
                 <div className={styles.detial}>
                     <span><b>Starting Date:</b> </span>
-                    <span><b>{new Date(parseInt(data[2])).toDateString()}</b></span>
+                    <span><b>{new Date(parseInt(data[2]) * 1000).toDateString()}</b></span>
                 </div>
                 <div className={styles.detial}>
                     <span><b>Ending Date:</b> </span>
-                    <span><b>{new Date(parseInt(data[3])).toDateString()}</b></span>
+                    <span><b>{new Date(parseInt(data[3]) * 1000).toDateString()}</b></span>
                 </div>
 
             </div >
-
-            {/* <WalletModal isModalVisible={!active} cancel={null} openWallet={} /> */}
-
         </div >
     );
 }

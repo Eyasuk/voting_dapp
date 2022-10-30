@@ -5,7 +5,7 @@ import styles from './successModal.module.scss';
 export default function SuccessModal({ isModalVisible, cancel, message }: any): JSX.Element {
 
     return (
-        <Modal className={styles.container} visible={isModalVisible} footer={null} onCancel={cancel}>
+        <Modal className={styles.container} visible={isModalVisible} footer={null} onCancel={cancel} closable={false}>
             <div className={styles.upperSide}>
                 <div className={styles.logo}>
                     <svg version="1.1" id="checkmark" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" x="0px" y="0px" xmlSpace="preserve">

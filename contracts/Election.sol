@@ -42,7 +42,7 @@ contract Election {
         vote.maxVoter = maxVoter;
         vote.imageUrl = imageUrl;
         vote.description = description;
-
+        vote.candidateNumber = 0;
         for (uint256 i = 0; i < candidate.length; i++) {
             addCandidate(
                 candidate[i].name,
@@ -59,7 +59,10 @@ contract Election {
         string calldata imageUrl,
         uint256 _voteId
     ) public {
-        require(block.timestamp <= votes[_voteId].voteStartingDate);
+        // require(
+        //     block.timestamp <= votes[_voteId].voteStartingDate,
+        //     "time error"
+        // );
         votes[_voteId].candidateNumber++;
         candidates[_voteId][votes[_voteId].candidateNumber] = Candidate(
             _name,
@@ -78,11 +81,11 @@ contract Election {
             _candidateId > 0 && _candidateId <= votes[_voteId].candidateNumber,
             "invalid candidate"
         );
-        // require(
-        //     block.timestamp >= votes[_voteId].voteStartingDate,
-        //     "not started"
-        // );
-        //require(block.timestamp < votes[_voteId].voteEndingDate, "ended");
+        require(
+            block.timestamp >= votes[_voteId].voteStartingDate,
+            "not started"
+        );
+        require(block.timestamp < votes[_voteId].voteEndingDate, "ended");
         voters[_voteId][msg.sender] = true;
         candidates[_voteId][_candidateId].voteCount++;
         return (block.timestamp, votes[_voteId].voteStartingDate);

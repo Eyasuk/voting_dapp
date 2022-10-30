@@ -14,7 +14,7 @@ export function NewVoteProvider({ children }: Props) {
         maxVoter: 0,
         startDate: '',
         endDate: '',
-        voteImage: null
+        voteImage: ''
     });
 
     const setVote = (voteInformation: voteInfoType) => {

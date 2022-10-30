@@ -5,6 +5,8 @@ import Header from 'components/shared/header';
 import { AddVoteProvider } from 'context/addVote';
 import { AddCandidateProvider } from 'context/addcandidate';
 import { NewVoteProvider } from 'context/newvoteinfo';
+import { PagesStatusProvider, usePageStatus } from 'context/pages';
+import LoadingIndicator from 'components/shared/loadingIndicator';
 
 import 'antd/dist/antd.css';
 import '../styles/globals.scss';
@@ -13,18 +15,21 @@ function MyApp({ Component, pageProps }: AppProps) {
   const getLibrary = (provider: any): Web3 => {
     return new Web3(provider);
   };
+
   return (
-    <NewVoteProvider>
-      <AddVoteProvider>
-        <AddCandidateProvider>
-          <Web3ReactProvider getLibrary={getLibrary}>
-            <Header>
-              <Component {...pageProps} />
-            </Header>
-          </Web3ReactProvider>
-        </AddCandidateProvider>
-      </AddVoteProvider>
-    </NewVoteProvider>
+    <PagesStatusProvider>
+      <NewVoteProvider>
+        <AddVoteProvider>
+          <AddCandidateProvider>
+            <Web3ReactProvider getLibrary={getLibrary}>
+              <Header>
+                <Component {...pageProps} />
+              </Header>
+            </Web3ReactProvider>
+          </AddCandidateProvider>
+        </AddVoteProvider>
+      </NewVoteProvider >
+    </PagesStatusProvider>
   );
 }
 

@@ -1,6 +1,8 @@
 import NextImage from 'next/image';
 import WalletHeader from 'components/features/walletheader';
 import styles from './header.module.scss';
+import { Networks } from 'service/walletconnect/types';
+import Link from 'next/link';
 
 export default function Header({ children }: any): JSX.Element {
     return (
@@ -14,11 +16,10 @@ export default function Header({ children }: any): JSX.Element {
                 <div className={styles.menu} >
 
                     <ul className={styles.nav}>
-                        <WalletHeader />
-                        <li className="active"><a href="#">Home</a></li>
-                        <li><a href="#">Price</a></li>
-                        <li><a href="#">About</a></li>
-                        <li><a href="#">Contact</a></li>
+                        <WalletHeader network={Networks.LocalHost} />
+                        <li className="active"><Link href="/">Home</Link></li>
+                        <li><Link href="/about">Our Team</Link></li>
+                        <li><Link href="https://github.com/Eyasuk/voting_dapp.git">Contrbute</Link></li>
                     </ul>
                 </div>
             </nav>

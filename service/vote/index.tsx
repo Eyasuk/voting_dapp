@@ -17,8 +17,7 @@ export const deployVote = async (chainId: number, voteInfo: VoteInfoType) => {
     try {
 
         const accounts = await web3.eth.getAccounts();
-
-        console.log(voteInfo.candidates);
+        console.log(voteInfo)
         const info = await voteContract.methods.addVote(voteInfo.name, 0, voteInfo.startingDate, voteInfo.endingDate, voteInfo.descrption, voteInfo.imageUrl, voteInfo.candidates).send({ from: accounts[0], gas: 1721975 },);
 
         return { success: true, data: info };
@@ -74,7 +73,7 @@ export const voting = async (voteId: number, candidateId: number) => {
     const accounts = await web3.eth.getAccounts();
     try {
         const voteContract = new web3.eth.Contract(Abi as AbiItem[], network.contractAddress);
-        const response = await voteContract.methods.voting(candidateId, voteId).send({ from: accounts[1], gas: 1721975 },);
+        const response = await voteContract.methods.voting(candidateId, voteId).send({ from: accounts[3], gas: 1721975 },);
         return { success: true, data: response };
     }
     catch (err) {

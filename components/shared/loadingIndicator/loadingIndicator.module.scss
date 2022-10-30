@@ -1,0 +1,81 @@
+    // Color
+    $orange: #fc7753;
+    $green: #4ecdc4;
+    $blue: #312d45;
+    $red: #e84855;
+    $white: #f3f5f8;
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-around;
+        flex-wrap: wrap;
+        width: 90%;
+        min-width: 100%;
+        height: 100%;
+        margin: 0 auto;
+        z-index: 100;
+        position: fixed;
+        top: 0;
+        left: 0;
+        background: rgba(255, 255, 255, 0.29);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(1.5px);
+        -webkit-backdrop-filter: blur(1.5px);
+        @mixin centerChildren() {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .type5 {
+            min-width: 33%;
+            $size: 100px;
+            width: $size;
+            height: $size;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            * {
+                width: $size * 0.5;
+                height: $size * 0.5;
+                border: solid 1px white;
+                margin: 0.2em;
+                -webkit-transform: rotate(-45deg);
+                -moz-transform: rotate(-45deg);
+                -ms-transform: rotate(-45deg);
+                -o-transform: rotate(-45deg);
+                transform: rotate(-45deg);
+            }
+            $animation-speed: 1s;
+            $interval: 0.15;
+            .pulse1 {
+                background-color: $green;
+                animation: pulse $animation-speed 0s ease infinite;
+            }
+            .pulse2 {
+                background-color: $orange;
+                animation: pulse $animation-speed $interval + s ease infinite;
+            }
+            .pulse3 {
+                background-color: $blue;
+                animation: pulse $animation-speed $interval * 2 + s ease infinite;
+            }
+            .pulse4 {
+                background-color: $red;
+                animation: pulse $animation-speed $interval * 3 + s ease infinite;
+            }
+            @keyframes pulse {
+                from {
+                    height: 50%;
+                }
+                5% {
+                    height: 80%;
+                }
+                50% {
+                    height: 50%
+                }
+                to {
+                    height: 50%;
+                }
+            }
+        }
+    }
